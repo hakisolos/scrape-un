@@ -1,6 +1,7 @@
 const express = require("express");
 const axios = require("axios");
 const cheerio = require("cheerio");
+const stream = require("stream");
 
 const app = express();
 const port = 3000; // You can change the port if needed
@@ -59,7 +60,16 @@ app.get("/api/wallpaper", async (req, res) => {
 
   try {
     const imageUrl = await getRandomImage(query);
-    res.redirect(imageUrl); // Send the image URL as a redirect response
+    
+    // Fetch the image and pipe the response to the client
+    const imageResponse = await axios.get(imageUrl, { responseType: 'stream' });
+    
+    // Set the correct content type for image
+    res.setHeader('Content-Type', 'image/jpeg');
+    
+    // Pipe the image stream to the response
+    imageResponse.data.pipe(res);
+    
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
