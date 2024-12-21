@@ -1,4 +1,4 @@
-const express = require("express");
+/*const express = require("express");
 const axios = require("axios");
 const cheerio = require("cheerio");
 
@@ -54,3 +54,4 @@ app.get("/api/lyrics", async (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
+*/
